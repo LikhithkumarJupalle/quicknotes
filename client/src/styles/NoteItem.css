@@ -1,0 +1,33 @@
+.note-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.note-content h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.note-content small {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+button {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #dc2626;
+}
