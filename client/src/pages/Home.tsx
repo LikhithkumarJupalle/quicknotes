@@ -19,7 +19,7 @@ const Home: React.FC<HomeProps> = ({ token, name }) => {
   const fetchNotes = async () => {
     try {
       const res = await getNotes(token);
-      setNotes(res.data); // ✅ show all notes
+      setNotes(res.data);
     } catch (err) {
       console.error("Fetch notes error:", err);
     }
@@ -29,9 +29,9 @@ const Home: React.FC<HomeProps> = ({ token, name }) => {
     if (!newNote.trim()) return;
 
     try {
-      await createNote(newNote, token); // ✅ save note
-      setNewNote(""); // ✅ clear input
-      fetchNotes();   // ✅ refresh list
+      await createNote(newNote, token);
+      setNewNote("");
+      fetchNotes();
     } catch (err) {
       console.error("Add note error:", err);
     }
@@ -40,9 +40,18 @@ const Home: React.FC<HomeProps> = ({ token, name }) => {
   const handleDeleteNote = async (id: string) => {
     try {
       await deleteNote(id, token);
-      fetchNotes(); // ✅ update after delete
+      fetchNotes();
     } catch (err) {
       console.error("Delete note error:", err);
+    }
+  };
+
+  const handleDeleteAllNotes = async () => {
+    try {
+      await Promise.all(notes.map(note => deleteNote(note._id, token)));
+      fetchNotes();
+    } catch (err) {
+      console.error("Delete all notes error:", err);
     }
   };
 
@@ -74,9 +83,18 @@ const Home: React.FC<HomeProps> = ({ token, name }) => {
             placeholder="Enter note"
             className="note-input"
           />
-          <button className="add-button" onClick={handleAddNote}>
-            Add
-          </button>
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <button className="add-button" onClick={handleAddNote}>
+              Add
+            </button>
+            <button
+              className="delete-button"
+              onClick={handleDeleteAllNotes}
+              style={{ backgroundColor: "#ff4d4d" }}
+            >
+              Delete All
+            </button>
+          </div>
         </div>
 
         <div className="notes-list">
